@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Data Attributes Example</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+            li {
+                padding: 10px;
+                background-color: #f4f4f4;
+                margin-bottom: 5px;
+                cursor: pointer;
+            }
+            li:hover {
+                background-color: #e0e0e0;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h1>Employee List</h1>
+
+        <ul id="employeeList">
+            <!--JS here-->
+        </ul>
+        <p id="displayRole">Click on an employee to see their role.</p>
+
+        
+        <script>
+            const people = [
+            {name: "Alice Johnson", position: "Manager"},
+            {name: "Bob Smith", position: "Developer"},
+            {name: "Charlie Brown", position: "Designer"},
+            {name: "David Williams", position: "Test"},
+            ]
+
+            const employeeList = document.querySelector("#employeeList");
+            const displayRole = document.querySelector("#displayRole");
+            const employees = document.querySelectorAll('#employeeList li');
+            const ulList = document.querySelector("ul");
+
+            people.forEach((person, index) => {
+                const li = document.createElement("li");
+                li.dataset.index = index
+                li.dataset.role = person.position
+                li.textContent = person.name
+
+                ulList.appendChild(li);
+            });
+
+            // Listener on parent element
+            employeeList.addEventListener("click", (evt) => {
+                if (evt.target.tagName === "LI") {
+                    // Destructure dataset object
+                    const { index, role } = evt.target.dataset
+
+                    // Display the dataset variables on the page
+                    displayRole.textContent = `${evt.target.textContent} (${index}) is a ${role}.`;
+                }
+            });
+
+        </script>
+
+    </body>
+</html>

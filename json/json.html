@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JSON Demo</title>
+  <link rel="stylesheet" href="json.css">
+</head>
+<body>
+
+  <h2>JSON Interactive Demo</h2>
+  <div id="container">
+
+    <div class="card">
+      <h3>JavaScript to JSON</h3>
+      <p><strong>JavaScript Object:</strong></p>
+      <pre>const obj = { brand: "Steinway", size: 170 }</pre>
+      <button id="btn1">Convert to JSON</button>
+      <pre id="js-to-json"></pre>
+    </div>
+
+    <div class="card">
+      <h3>JSON to JavaScript</h3>
+      <p><strong>JSON String:</strong></p>
+      <pre>const json = '{"brand": "Steinway", "size": 170}'</pre>
+      <button id="btn2">Parse to JavaScript</button>
+      <pre id="json-to-js"></pre>
+    </div>
+
+    <div class="card">
+      <h3>Difference Summary</h3>
+      <button id="btn3">Compare JSON vs JS Object</button>
+      <pre id="comparison-output"></pre>
+    </div>
+
+  </div>
+
+  <script>
+    document.querySelector("#btn1").addEventListener("click", () => {
+      const obj = { brand: "Steinway", size: 170 };
+      const jsonString = JSON.stringify(obj, null, 2);
+      
+      document.getElementById("js-to-json").textContent =
+        `JSON.stringify(obj):\n  ${jsonString}`;
+    });
+
+    document.querySelector("#btn2").addEventListener("click", () => {
+      const jsonStr = '{"brand": "Steinway", "size": 170}';
+      const jsObj = JSON.parse(jsonStr);
+      const output = `Parsed JavaScript Object:\n${JSON.stringify(jsObj, null, 2)}\n\nType: ${typeof jsObj}`;
+      
+      document.getElementById("json-to-js").textContent = output;
+      console.log(jsObj); 
+    });
+
+    document.querySelector("#btn3").addEventListener("click", () => {
+      const jsObj = { brand: "Steinway", size: 170 };
+      const jsonStr = JSON.stringify(jsObj);
+
+      const explanation = `
+JavaScript Object:
+  const obj = { brand: "Steinway", size: 170 }
+
+JSON (string):
+  const json = '${jsonStr}'
+
+➤ JSON is a *string* used to store or send data.
+➤ A JavaScript object is an actual *data structure* you can access with dot/bracket notation.
+
+You can inspect it in the developer console!
+`;
+      document.getElementById("comparison-output").textContent = explanation;
+    });
+  </script>
+
+</body>
+</html>

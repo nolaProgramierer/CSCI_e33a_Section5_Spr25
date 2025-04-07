@@ -1,0 +1,27 @@
+.forms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.vote-msg {
+    text-align: center;
+    background-color: gray;
+    color: white;
+    border-radius: 20px;
+}
+/* Nav bar */
+.nav {
+    display: flex;
+    height: 80px;
+    justify-content: end;
+    align-items: center;
+}
+.nav li a:hover {
+    text-decoration: underline;
+    color: darkgray;
+}
+ .disabled-button {
+    pointer-events: auto;
+    opacity: 0.5;
+    cursor: not-allowed;
+ }

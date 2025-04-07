@@ -1,0 +1,58 @@
+{% extends "piano_app/layout.html" %}
+{% load humanize %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <h4>Brand: <em>{{piano.brand}}</em></h4>
+        <div>Size: {{piano.size}} cms</div>
+        <div>
+            Retail price: ${{piano.price|intcomma}}
+        </div>
+        {% if piano.imageUrl %}
+            <div class="col-md-4">
+                <img src="{{ piano.imageUrl }}" class="card-img" alt="{{ piano.title }}">
+            </div>
+            <div class="col-md-8">
+        {% else %}
+            <div class="col-md-12">
+        {% endif %}
+        <div>
+            Owner: {{piano.owner.username}}
+        </div>
+        <!-- CSRF token for JavaScript fetch -->
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+        {% if request.user != piano.owner %}
+            <button class="btn btn-info vote-btn 
+                {% if last_user_vote and last_user_vote.vote_type == 1 %} disabled-button {% endif %}" 
+                data-piano="{{ piano.id }}" 
+                data-vote="{{1}}">
+                UpVote
+            </button>
+            <button class="btn btn-info vote-btn
+                    {% if last_user_vote and last_user_vote.vote_type == -1 %} disabled-button {% endif %}" 
+                    data-piano="{{ piano.id }}" 
+                    data-vote="{{-1}}">
+                    DownVote
+            </button>
+        {% endif %}
+        
+        <div class="vote-container">
+            Number of votes:
+            <span class="vote-num" data-piano="{{piano.id}}">
+                {{ piano_votes }}
+            </span>
+            
+        </div>
+        <div>
+            {% if user.is_authenticated and piano.owner.username == request.user.username %}
+            <a href="#" class="piano_delete_links" data-piano="{{ piano.id }}" data-url="{% url 'delete_piano' piano.id %}">Delete piano</a>
+            {% endif %}    
+        </div>
+        
+    </div>
+</div>
+    
+{% endblock %}
